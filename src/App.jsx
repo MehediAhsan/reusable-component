@@ -1,12 +1,11 @@
 import './App.css'
+import Layout from './layout/Layout'
 
 function App() {
 
   return (
     <>
-      <div>
-        <h1 className='text-center font-bold text-4xl'>Hi Vite</h1>
-      </div>
+      <Layout></Layout>
     </>
   )
 }
