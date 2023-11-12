@@ -1,26 +1,24 @@
-import Footer from '../components/Footer';
-import LeftNav from './../components/LeftNav';
-import TopNavbar from './../components/TopNavbar';
-import MainContent from './../components/content/MainContent';
+import Footer from "../components/Footer";
+import LeftNav from "./../components/LeftNav";
+import TopNavbar from "./../components/TopNavbar";
+import MainContent from "./../components/content/MainContent";
 
 const Layout = () => {
-    return (
-        <div className="flex h-screen bg-gray-100">
-      {/* Left Side Navigation */}
-      <LeftNav />
+  return (
+    <div className="flex flex-col h-screen bg-gray-100">
+      <TopNavbar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top Navbar */}
-        <TopNavbar />
+      <div className="flex flex-1">
+        <LeftNav />
 
-        {/* Main Content */}
+        <div className="flex-1 p-4">
         <MainContent />
-
-        {/* Bottom Footer */}
-        <Footer />
+        </div>
       </div>
+
+      <Footer />
     </div>
-    );
+  );
 };
 
 export default Layout;
