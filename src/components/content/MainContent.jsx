@@ -2,7 +2,7 @@
 const MainContent = () => {
     return (
         <div>
-            sdf
+            <h1 className="text-4xl text-red-500 md:ml-64"> dskfj</h1>
         </div>
     );
 };
