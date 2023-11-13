@@ -1,60 +1,234 @@
+// MainContent.js
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import InputField from '../form/InputField';
+import { useState } from 'react';
 
-const MainContent = () => {
-    return (
-        <div className="p-10 md:p-20">
-            
+const schema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  dept: Yup.string().required('Dept is required'),
+  batch: Yup.number().required('Batch is required'),
+  varsity: Yup.string().required('Varsity is required'),
+  session: Yup.string().required('Session is required'),
+  address: Yup.string().required('Address is required'),
+  district: Yup.string().required('District is required'),
+  thana: Yup.string().required('Thana is required'),
+  post: Yup.string().required('Post is required'),
+});
 
-<ol class="flex items-center w-full sm:mb-5 h-full">
-    <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-        <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
-            <svg class="w-4 h-4 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
-            </svg>
+function MainContent() {
+  const { register, handleSubmit, formState, setValue, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const formArray = [1, 2, 3];
+  const [formNo, setFormNo] = useState(formArray[0])
+  const [state, setState] = useState({
+    name: '',
+    dept: '',
+    batch: '',
+    varsity: '',
+    session: '',
+    address: '',
+    district: '',
+    thana: '',
+    post: ''
+  })
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    })
+  }
+  const next = () => {
+    if (formNo === 1 && state.name && state.dept && state.batch) {
+      setFormNo(formNo + 1)
+    }
+    else if (formNo === 2 && state.varsity && state.session && state.address) {
+      setFormNo(formNo + 1)
+    } else {
+      // toast.error('Please fillup all input field')
+    }
+  }
+  const pre = () => {
+    setFormNo(formNo - 1)
+  }
+  const finalSubmit = () => {
+    console.log(state);
+  }
+
+  return (
+    <div className="w-full h-full p-10 md:p-20 flex justify-center items-center overflow-hidden">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="md:w-1/2 rounded-md shadow-md bg-white p-5"
+      >
+        {/* ... Other code ... */}
+        <div className='flex justify-center items-center'>
+          {
+            formArray.map((v, i) => <><div className={`w-[35px] my-3 text-white rounded-full ${formNo - 1 === i || formNo - 1 === i + 1 || formNo === formArray.length ? 'bg-blue-500' : 'bg-slate-400'} h-[35px] flex justify-center items-center`}>
+              {v}
+            </div>
+              {
+                i !== formArray.length - 1 && <div className={`w-[85px] h-[2px] ${formNo === i + 2 || formNo === formArray.length ? 'bg-blue-500' : 'bg-slate-400'}`}></div>
+              }
+            </>)
+          }
         </div>
-    </li>
-    <li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
-        <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-            <svg class="w-4 h-4 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                <path d="M18 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM2 12V6h16v6H2Z"/>
-                <path d="M6 8H4a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2Zm8 0H9a1 1 0 0 0 0 2h5a1 1 0 1 0 0-2Z"/>
-            </svg>
-        </div>
-    </li>
-    <li class="flex items-center w-full">
-        <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
-            <svg class="w-4 h-4 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z"/>
-            </svg>
-        </div>
-    </li>
-</ol>
-<form action="#">
-    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Invoice details</h3>
-    <div class="grid gap-4 mb-4 sm:grid-cols-2">
-        <div>
-            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-            <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username.example" required=""/>
-        </div>
-        <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
-        </div>
-        <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-            <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required=""/>
-        </div>                        
-        <div>
-            <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-            <input type="password" name="confirm-password" id="confirm-password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required=""/>
-        </div>
+        {formNo === 1 && (
+          <div>
+            <InputField
+            register={register}
+              label="Name"
+              name="name"
+              id="name"
+              type="text"
+              value={state.name}
+              onChange={inputHandle}
+              error={errors}
+            />
+            <InputField
+            register={register}
+              label="Dept"
+              name="dept"
+              id="dept"
+              type="text"
+              value={state.dept}
+              onChange={inputHandle}
+              error={errors}
+            />
+            <InputField
+            register={register}
+              label="Batch"
+              name="batch"
+              id="batch"
+              type="number"
+              value={state.batch}
+              onChange={inputHandle}
+              error={errors}
+            />
+            <div className="mt-4 flex justify-center items-center">
+              <button
+                type="button"
+                onClick={next}
+                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+        {/* ... Other code ... */}
+        {formNo === 2 && (
+  <div>
+    <InputField
+    register={register}
+      label="Varsity"
+      name="varsity"
+      id="varsity"
+      type="text"
+      value={state.varsity}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <InputField
+    register={register}
+      label="Session"
+      name="session"
+      id="session"
+      type="text"
+      value={state.session}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <InputField
+    register={register}
+      label="Address"
+      name="address"
+      id="address"
+      type="text"
+      value={state.address}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <div className="mt-4 gap-3 flex justify-center items-center">
+      <button
+        type="button"
+        onClick={pre}
+        className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
+      >
+        Previous
+      </button>
+      <button
+        type="button"
+        onClick={next}
+        className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
+      >
+        Next
+      </button>
     </div>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Next Step: Payment Info
-    </button>
-</form>
+  </div>
+)}
 
-        </div>
-    );
-};
+{formNo === 3 && (
+  <div>
+    <InputField
+    register={register}
+      label="District"
+      name="district"
+      id="district"
+      type="text"
+      value={state.district}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <InputField
+    register={register}
+      label="Thana"
+      name="thana"
+      id="thana"
+      type="text"
+      value={state.thana}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <InputField
+    register={register}
+      label="Post"
+      name="post"
+      id="post"
+      type="text"
+      value={state.post}
+      onChange={inputHandle}
+      error={errors}
+    />
+    <div className="mt-4 gap-3 flex justify-center items-center">
+      <button
+        type="button"
+        onClick={pre}
+        className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
+      >
+        Previous
+      </button>
+      <button
+        type="submit"
+        className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
+        disabled={formState.isSubmitting}
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+)}
+      </form>
+    </div>
+  );
+}
 
 export default MainContent;
