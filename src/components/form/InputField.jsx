@@ -2,6 +2,7 @@
 import React from 'react';
 
 const InputField = ({ label, name, type, value, onChange, error, register, id }) => {
+  // console.log(error);
   return (
     <div className="flex flex-col mb-2">
       <label htmlFor={name}>{label}</label>
@@ -17,7 +18,7 @@ const InputField = ({ label, name, type, value, onChange, error, register, id })
         id={id}
         placeholder={label.toLowerCase()}
       />
-      {error && <span className="text-red-500">{error.message}</span>}
+      {error && <span className="text-red-500">{error?.name?.message}</span>}
     </div>
   );
 };
