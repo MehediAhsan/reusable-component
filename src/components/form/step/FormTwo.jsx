@@ -1,7 +1,13 @@
 import React from 'react';
 import InputField from '../InputField';
+import ImageUpload from '../ImageUpload';
 
-const FormTwo = ({state, inputHandle, register, errors, next, pre}) => {
+const FormTwo = ({state, inputHandle, register, errors, next, pre, unregister, onSubmit, setValue}) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit();
+    next();
+  }
     return (
         <div>
             <InputField
@@ -34,6 +40,8 @@ const FormTwo = ({state, inputHandle, register, errors, next, pre}) => {
               onChange={inputHandle}
               error={errors}
             />
+            <ImageUpload name="profileImage" id="profileImage" label="Profile Image" register={register} unregister={unregister} setValue={setValue} />
+
             <div className="mt-4 gap-3 flex justify-center items-center">
               <button
                 type="button"
@@ -43,8 +51,8 @@ const FormTwo = ({state, inputHandle, register, errors, next, pre}) => {
                 Previous
               </button>
               <button
-                type="button"
-                onClick={next}
+                type="submit"
+                onClick={handleSubmit}
                 className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
               >
                 Next

@@ -29,7 +29,9 @@ function MainContent() {
     register,
     handleSubmit,
     formState: { errors },
-    formState
+    formState,
+    unregister,
+    setValue
   } = useForm(
     {
       mode: "all",
@@ -104,7 +106,7 @@ function MainContent() {
         )}
         {/* ... Other code ... */}
         {formNo === 2 && (
-          <FormTwo state={state} inputHandle={inputHandle} register={register} errors={errors} next={next} pre={pre}></FormTwo>
+          <FormTwo state={state} inputHandle={inputHandle} register={register} errors={errors} next={next} pre={pre} unregister={unregister} onSubmit={handleSubmit(onSubmit)} setValue={setValue}></FormTwo>
         )}
 
         {formNo === 3 && (
