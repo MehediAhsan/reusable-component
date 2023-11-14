@@ -5,6 +5,11 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from "../form/InputField";
 import { useState } from "react";
+import FormOne from "../form/step/FormOne";
+import FormTwo from "../form/step/FormTwo";
+import FormThree from "../form/step/FormThree";
+import FormFour from "../form/step/FormFour";
+import StepDesign from "../form/step/StepDesign";
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -20,14 +25,16 @@ const schema = Yup.object().shape({
 
 function MainContent() {
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
-    formState,
-    setValue
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    formState
+  } = useForm(
+    {
+      mode: "all",
+      resolver: yupResolver(schema)
+    });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -52,6 +59,7 @@ function MainContent() {
       [e.target.name]: e.target.value,
     });
   };
+
   const next = () => {
     if (formNo === 1 && state.name && state.dept && state.batch) {
       setFormNo(formNo + 1);
@@ -60,10 +68,10 @@ function MainContent() {
       state.varsity &&
       state.session &&
       state.address
-    ){
+    ) {
       setFormNo(formNo + 1);
-    }  
-     else if (
+    }
+    else if (
       formNo === 3 &&
       state.district &&
       state.thana &&
@@ -77,8 +85,8 @@ function MainContent() {
   const pre = () => {
     setFormNo(formNo - 1);
   };
-  
-  console.log(state)
+
+  // console.log(state)
 
   return (
     <div className="w-full h-full p-10 md:p-20 flex justify-center items-center overflow-hidden">
@@ -87,192 +95,27 @@ function MainContent() {
         className="md:w-1/2 rounded-md shadow-md bg-white p-5"
       >
         {/* ... Other code ... */}
-        <div className="flex justify-center items-center">
-          {formArray.map((v, i) => (
-            <>
-              <div
-                className={`w-[35px] my-3 text-white rounded-full ${
-                  formNo - 1 === i ||
-                  formNo - 1 === i + 1 ||
-                  formNo === formArray.length
-                    ? "bg-blue-500"
-                    : "bg-slate-400"
-                } h-[35px] flex justify-center items-center`}
-              >
-                {v}
-              </div>
-              {i !== formArray.length - 1 && (
-                <div
-                  className={`w-[85px] h-[2px] ${
-                    formNo === i + 2 || formNo === formArray.length
-                      ? "bg-blue-500"
-                      : "bg-slate-400"
-                  }`}
-                ></div>
-              )}
-            </>
-          ))}
-        </div>
+        <StepDesign formArray={formArray} formNo={formNo}></StepDesign>
+
         {formNo === 1 && (
-          <div>
-            <InputField
-              register={register}
-              label="Name"
-              name="name"
-              id="name"
-              type="text"
-              value={state.name}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Dept"
-              name="dept"
-              id="dept"
-              type="text"
-              value={state.dept}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Batch"
-              name="batch"
-              id="batch"
-              type="number"
-              value={state.batch}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <div className="mt-4 flex justify-center items-center">
-              <button
-                type="button"
-                onClick={next}
-                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          <FormOne state={state} inputHandle={inputHandle} register={register} errors={errors} next={next}
+            onSubmit={handleSubmit(onSubmit)}
+          ></FormOne>
         )}
         {/* ... Other code ... */}
         {formNo === 2 && (
-          <div>
-            <InputField
-              register={register}
-              label="Varsity"
-              name="varsity"
-              id="varsity"
-              type="text"
-              value={state.varsity}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Session"
-              name="session"
-              id="session"
-              type="text"
-              value={state.session}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Address"
-              name="address"
-              id="address"
-              type="text"
-              value={state.address}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <div className="mt-4 gap-3 flex justify-center items-center">
-              <button
-                type="button"
-                onClick={pre}
-                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                onClick={next}
-                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          <FormTwo state={state} inputHandle={inputHandle} register={register} errors={errors} next={next} pre={pre}></FormTwo>
         )}
 
         {formNo === 3 && (
-          <div>
-            <InputField
-              register={register}
-              label="District"
-              name="district"
-              id="district"
-              type="text"
-              value={state.district}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Thana"
-              name="thana"
-              id="thana"
-              type="text"
-              value={state.thana}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <InputField
-              register={register}
-              label="Post"
-              name="post"
-              id="post"
-              type="text"
-              value={state.post}
-              onChange={inputHandle}
-              error={errors}
-            />
-            <div className="mt-4 gap-3 flex justify-center items-center">
-              <button
-                type="button"
-                onClick={pre}
-                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
-              >
-                Previous
-              </button>
-              <button
-                type="submit"
-                onClick={next}
-                className="px-3 py-2 text-lg rounded-md w-full text-white bg-blue-500"
-                disabled={formState.isSubmitting}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+          <FormThree state={state} inputHandle={inputHandle} register={register} errors={errors} next={next} pre={pre} onSubmit={handleSubmit(onSubmit)} formState={formState} ></FormThree>
         )}
         {
           formNo === 4 && (
-            <div className="flex flex-col my-20 gap-4 justify-center items-center">
-              <h1 className="text-center text-4xl text-blue-500 font-bold">Congratulations!</h1>
-              <p className="text-gray-700 text-center">Your Form has been submitted successfully</p>
-              <button
-                type="button"
-                className="px-3 py-2 text-lg rounded-md text-white bg-blue-500"
-              >
-                Go Home
-              </button>
-            </div>
+            <FormFour></FormFour>
           )
         }
+        <pre className="text-black hidden">{JSON.stringify(watch(), null, 2)}</pre>
       </form>
     </div>
   );
