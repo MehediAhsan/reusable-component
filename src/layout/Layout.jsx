@@ -5,13 +5,13 @@ import MainContent from "./../components/content/MainContent";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col bg-gray-100">
       <TopNavbar />
 
-      <div className="flex flex-1">
+      <div className="flex p-4 gap-4">
         <LeftNav />
 
-        <div className="flex-1 p-4">
+        <div className="w-full bg-white p-4">
         <MainContent />
         </div>
       </div>
