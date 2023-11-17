@@ -2,6 +2,7 @@ import Footer from "../components/Footer";
 import LeftNav from "./../components/LeftNav";
 import TopNavbar from "./../components/TopNavbar";
 import MainContent from "./../components/content/MainContent";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -12,7 +13,7 @@ const Layout = () => {
         <LeftNav />
 
         <div className="w-full bg-white p-4">
-        <MainContent />
+        <Outlet></Outlet>
         </div>
       </div>
 
